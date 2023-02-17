@@ -31,12 +31,12 @@ if (isset($_POST['formSubmit'])) {
     $userEmail = sanitiseData($_POST['contactEmail']);
     $userMessage = sanitiseData($_POST['contactMessage']);
 
-    echo $userEmail;
-    echo "<p>";
-    echo $userMessage;
+    $csvfile = fopen("contact.csv", "a");
+    fwrite($csvfile, $userEmail . "," . $userMessage . "\n");
+    fclose($csvfile);
 }
-
 ?>
+
 
 
 
