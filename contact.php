@@ -11,7 +11,7 @@
 <h1>Contact Us</h1>
 <div class="container-fluid">
     <h1 class="text-primary">Please Send us a Message</h1>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="mb-3">
             <label for="contactEmail" class="form-label">Email address</label>
             <input type="email" class="form-control" id="contactEmail" name="contactEmail"
