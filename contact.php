@@ -1,17 +1,11 @@
-<!doctype html>
-<?php include "template.php" ?>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contact Us</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-</head>
+<?php include "template.php"
+/** @var $conn */
+?>
+<title>Contact Us</title>
 <body>
-<h1>Contact Us</h1>
 <div class="container-fluid">
     <h1 class="text-primary">Please Send us a Message</h1>
-    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="mb-3">
             <label for="contactEmail" class="form-label">Email address</label>
             <input type="email" class="form-control" id="contactEmail" name="contactEmail"
@@ -27,16 +21,22 @@
 
 
 <?php
-if (isset($_POST['formSubmit'])) {
+//if (isset($_POST['formSubmit'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userEmail = sanitiseData($_POST['contactEmail']);
     $userMessage = sanitiseData($_POST['contactMessage']);
 
-    $csvfile = fopen("contact.csv", "a");
-    fwrite($csvfile, $userEmail . "," . $userMessage . "\n");
-    fclose($csvfile);
-}
-?>
+    $sqlStmt = $conn->prepare("INSERT INTO Contact (ContactEmail, Message) VALUES (:ContactEmail, :Message)");
+    $sqlStmt->bindParam(':ContactEmail', $userEmail);
+    $sqlStmt->bindParam(':Message', $userMessage);
+    $sqlStmt->execute();
 
+//    $csvFile = fopen("contact.csv", "a");
+//    fwrite($csvFile, $userEmail.",".$userMessage."\n");
+//    fclose($csvFile);
+}
+
+?>
 
 
 

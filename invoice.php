@@ -3,7 +3,7 @@
 <body>
 
 <?php
-
+$invoiceNumber = inval(sanitisedata($_GET)["invoiceNumber"]));
 // Read the contents of the file
 $currentRow = 1;
 if (($handle = fopen("orders.csv", "r")) !== FALSE) {

@@ -102,3 +102,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 <script src="js/bootstrap.bundle.min.js"></script>
 </html>
+
+$productNames = array("product1"=>"Darth Vader Helmet", "product2"=>"Grogu Plush", "product3"=>"ROTJ Jigsaw", "product4"=>"Aftermath", "product5"=>"Alphabet Squadron");
+$productPrices= array("product1"=>299.0, "product2"=>32.95, "product3"=>219.95, "product4"=>24.95, "product5"=>24.95);
+
+
+<?php echo $productNames["product1"]; ?>
