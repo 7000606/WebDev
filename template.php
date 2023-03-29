@@ -40,7 +40,7 @@ function footer(): string
 
 
 function sanitiseData($unsanitisedData): string
-{template.php
+{
     $unsanitisedData = trim($unsanitisedData);
     $unsanitisedData = stripslashes($unsanitisedData);
     $sanitisedData = htmlspecialchars($unsanitisedData);

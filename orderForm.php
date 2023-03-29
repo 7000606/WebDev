@@ -87,7 +87,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if ($prodQuantity5 < 0) {
         $prodQuantity5 = 0;
-    }
+    }else{
+        // write to db
+        $orderNumber = "1"; // TODO : Fix to generate new one.
+        $customerID = "1"; // TODO: Fix to load current customer ID
+        $productID = 5; //TODO: Load Dynamically
+
+        $sqlStmt = $conn->prepare("INSERT INTO Orders (OrderNumber, CustomerID, ProductID, Quantity) VALUES (:OrderNumber, :CustomerID, :ProductID, :Quantity)");
+        $sqlStmt->bindParam('OrderNumber', $orderNumber);
+        $sqlStmt->bindParam('CustomerID', $customerID);
+        $sqlStmt->bindParam('ProductID', $productID);
+        $sqlStmt->bindParam('Quantity', $prodQuantity5);
+        $sqlStmt->execute();
 
 
     $csvFile = fopen("orders.csv", "a");
@@ -97,6 +108,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     fclose($csvFile);
 }
 ?>
+
+$sqlstmt = $conn->perepare(INSERT INTO Orders (OrderNumber, CustomerID, Quantity) VALUES (:OrderNumber, :CustomerID, :Product
+
 
 <?php echo footer() ?>
 </body>
