@@ -1,33 +1,55 @@
-# Project overview
 
-this PHP website will be an ecommerce site to sell handmade stars wars memorable.
+# Project Overview
 
-# User Management
-User will be able to log in, log out, reset their password, and edit their details.
+This PHP website will be an ecommerce site to sell handmade star wars memorabilia.
 
-User will need to store:
+## User Management
+Users will be able to log in, log out, reset their passwords, and edit their details.
 
--Name 
+Users will need to store:
+- Name
+- DOB
+- Hashed password
+- Access Level (user vs Administrator)
+- Status (active or disabled)
+-Quantity 
 
--DBO
+# Project Overview
 
--Hashed-brown Password 
+This PHP website will be an ecommerce site to sell handmade star wars memorabilia.
 
--Accesses level (Administration)
+## User Management
+Users will be able to log in, log out, reset their passwords, and edit their details.
 
--Status( active or disabled)
-
-## Product Management 
+Users will need to store:
+- Name
+- DOB
+- Hashed password
+- Access Level (user vs Administrator)
+- Status (active or disabled)
+## Product management 
 
 Administration will be able to add, remove, edit products.
 
-Products will have:
+Product will have: 
+- A name 
+- A price 
+- A description 
+- Quantity 
 
--A name 
+# Behavior User Journey
 
--A price 
-
--A description
-
--Quantity 
-
+```mermaid
+journey
+title User Journey
+    section Login
+        section Login
+        Load main (home) page: 5: Unauthenticated User
+        Enter login details: 5: Unauthenticated User
+        Press Login Button: 5: Unauthenticated User
+    section Registered
+        Perform site Actions:5: Authenticated User
+    section Logoff
+        Press Logoff Button in Navbar:5: Authenticated User
+        Close Browser:5: Unauthenticated User
+```
