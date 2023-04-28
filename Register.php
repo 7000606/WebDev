@@ -47,6 +47,8 @@ IF ($_SERVER["REQUEST_METHOD"]== "POST") { // Will return true when the user pre
         echo "sorry, the username already exist";
 }else{
     // the username entered is unique (doesn't already exist)
+        $password = ;
+        $password =
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 $sqlStmt = $conn->prepare("INSERT INTO Customers (EmailAddress, HashedPassword, FirstName) VALUES (:EmailAddress, :HashedPassword, :FirstName)");
