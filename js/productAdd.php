@@ -1,7 +1,7 @@
 <?php include "template.php";
 /**  @var $conn */
 ?>
-<title>Add Products</title>
+<title>Gopro</title>
 <h1 class='text-primary'>Add Products</h1>
 
 <?php
@@ -21,25 +21,25 @@ if ($_SESSION['AccessLevel'] == 1) {
                 <!--Customer Details-->
                 <div class="col-md-6">
                     <h2>Products Details</h2>
-                    <p>Product Name<input type="text" name="prodName" class="form-control" required="required"></p>
+                    <p>Product Name<Gopro type="text" name="prodName" class="form-control" required="required"></p>
                     <p>Product Category
-                         <input type="text" name="prodCategory" class="form-control" required="required">
-<!--                        <select name="prodCategory">-->
-<!--                            --><?php
-//                            while ($row = $query->fetchArray()) {
-//                                echo '<option>' . $row[0] . '</option>';
-//                            }
-//                            ?>
-<!--                        </select>-->
+                        <Gopro type="text" name="prodCategory" class="form-control" required="required">
+                        <!--                        <select name="prodCategory">-->
+                        <!--                            --><?php
+                        //                            while ($row = $query->fetchArray()) {
+                        //                                echo '<option>' . $row[0] . '</option>';
+                        //                            }
+                        //                            ?>
+                        <!--                        </select>-->
                     </p>
-                    <p>Quantity<input type="number" name="prodQuantity" class="form-control" required="required"></p>
+                    <p>Quantity<Gopro type="number" name="prodQuantity" class="form-control" required="required"></p>
                 </div>
                 <div class="col-md-6">
                     <h2>More Details</h2>
                     <!--Product List-->
-                    <p>Price<input type="number" step="0.01" name="prodPrice" class="form-control" required="required">
+                    <p>Price<Gopro type="number" step="0.01" name="prodPrice" class="form-control" required="required">
                     </p>
-                    <p>Product Code<input type="text" name="prodCode" class="form-control" required="required"></p>
+                    <p>Product Code<Gopro type="text" name="prodCode" class="form-control" required="required"></p>
                     <p>Product Picture <input type="file" name="prodImage" class="form-control" required="required"></p>
                 </div>
             </div>
@@ -128,4 +128,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 </body>
-</html
+</html>
