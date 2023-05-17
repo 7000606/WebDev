@@ -2,7 +2,7 @@
 /**  @var $conn */
 ?>
 <title>Gopro</title>
-<h1 class='text-primary'>Add Products</h1>
+<h1 class='text-primary'>Gopro</h1>
 
 <?php
 $query = $conn->query("SELECT DISTINCT category FROM Products");
@@ -24,13 +24,13 @@ if ($_SESSION['AccessLevel'] == 1) {
                     <p>Product Name<Gopro type="text" name="prodName" class="form-control" required="required"></p>
                     <p>Product Category
                         <Gopro type="text" name="prodCategory" class="form-control" required="required">
-                        <!--                        <select name="prodCategory">-->
-                        <!--                            --><?php
-                        //                            while ($row = $query->fetchArray()) {
-                        //                                echo '<option>' . $row[0] . '</option>';
-                        //                            }
-                        //                            ?>
-                        <!--                        </select>-->
+                            <!--                        <select name="prodCategory">-->
+                            <!--                            --><?php
+                            //                            while ($row = $query->fetchArray()) {
+                            //                                echo '<option>' . $row[0] . '</option>';
+                            //                            }
+                            //                            ?>
+                            <!--                        </select>-->
                     </p>
                     <p>Quantity<Gopro type="number" name="prodQuantity" class="form-control" required="required"></p>
                 </div>
@@ -129,3 +129,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </body>
 </html>
+

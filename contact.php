@@ -1,6 +1,8 @@
-<?php include "template.php"
+<?php include "template.php";
 /** @var $conn */
 ?>
+
+
 <title>Contact Us</title>
 <body>
 <div class="container-fluid">
@@ -31,6 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sqlStmt->bindParam(':Message', $userMessage);
     $sqlStmt->execute();
 
+
+
+
+
+
 //    $csvFile = fopen("contact.csv", "a");
 //    fwrite($csvFile, $userEmail.",".$userMessage."\n");
 //    fclose($csvFile);
@@ -43,5 +50,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <?php echo footer() ?>
 </body>
-<script src="js/bootstrap.bundle.min.js"></script>
+<!--<script src="js/bootstrap.bundle.min.js"></script>-->
 </html>

@@ -54,71 +54,81 @@
         </div>
         <input type="submit" name="formSubmit" value="Submit">
     </form>
+<title>Order Form</title>
+<?php include "template.php";
+/**  @var $conn */
+?>
+<link rel="stylesheet" href="css/orderForm.css">
+
+<h1 class="text-primary">Order Form</h1>
+
+<?php
+$status = "";
+if (isset($_POST['Code']) && $_POST['Code'] != "") {
+    $code = $_POST['Code'];
+    $row = $conn->querySingle("SELECT * FROM products WHERE code='$code'", true);
+    $name = $row['ProductName'];
+    $price = $row['Price'];
+    $image = $row['Image'];
+    $id = $row['ProductID'];
+
+    $cartArray = array(
+        $code => array(
+            'id' => $id,
+            'productName' => $name,
+            'code' => $code,
+            'price' => $price,
+            'quantity' => 1,
+            'image' => $image)
+    );
+
+    // Debug Purposes
+    // echo '<pre>'; print_r($cartArray); echo '</pre>';
+
+    if (empty($_SESSION["ShoppingCart"])) {
+        $_SESSION["ShoppingCart"] = $cartArray;
+        $status = "<div class='box'>Product is added to your cart!</div>";
+    } else {
+        $array_keys = array_keys($_SESSION["ShoppingCart"]);
+        if (in_array($code, $array_keys)) {
+            $status = "<div class='box' style='color:red;'>Product is already added to your cart!</div>";
+        } else {
+            $_SESSION["ShoppingCart"] = array_merge(
+                $_SESSION["ShoppingCart"], $cartArray
+            );
+            $status = "<div class='box'>Product is added to your cart!</div>";
+        }
+    }
+}
+?>
+
+<div class="message_box" style="margin:10px 0px;">
+    <?php echo $status; ?>
 </div>
 
 <?php
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Customer Details
-    $cusNameFirst = sanitiseData($_POST['customerNameFirst']);
-    $cusNameSecond = sanitiseData($_POST['customerNameSecond']);
-    $cusAddress = sanitiseData($_POST['customerAddress']);
-    $cusEmail = sanitiseData($_POST['customerEmail']);
-    $cusPhone = sanitiseData($_POST['customerPhone']);
-
-    // Product Quantities
-    $prodQuantity1 = sanitiseData($_POST['orderProduct1']);
-    $prodQuantity2 = sanitiseData($_POST['orderProduct2']);
-    $prodQuantity3 = sanitiseData($_POST['orderProduct3']);
-    $prodQuantity4 = sanitiseData($_POST['orderProduct4']);
-    $prodQuantity5 = sanitiseData($_POST['orderProduct5']);
-
-    if ($prodQuantity1 < 0) {
-        $prodQuantity1 = 0;
-    }
-    if ($prodQuantity2 < 0) {
-        $prodQuantity2 = 0;
-    }
-    if ($prodQuantity3 < 0) {
-        $prodQuantity3 = 0;
-    }
-    if ($prodQuantity4 < 0) {
-        $prodQuantity4 = 0;
-    }
-    if ($prodQuantity5 < 0) {
-        $prodQuantity5 = 0;
-    }else{
-        // write to db
-        $orderNumber = "1"; // TODO : Fix to generate new one.
-        $customerID = "1"; // TODO: Fix to load current customer ID
-        $productID = 5; //TODO: Load Dynamically
-
-        $sqlStmt = $conn->prepare("INSERT INTO Orders (OrderNumber, CustomerID, ProductID, Quantity) VALUES (:OrderNumber, :CustomerID, :ProductID, :Quantity)");
-        $sqlStmt->bindParam('OrderNumber', $orderNumber);
-        $sqlStmt->bindParam('CustomerID', $customerID);
-        $sqlStmt->bindParam('ProductID', $productID);
-        $sqlStmt->bindParam('Quantity', $prodQuantity5);
-        $sqlStmt->execute();
-
-
-    $csvFile = fopen("orders.csv", "a");
-// Write the string to the end of the file.
-    fwrite($csvFile, $cusNameFirst . "," . $cusNameSecond . "," . $cusAddress . "," . $cusEmail . "," . $cusPhone . "," . $prodQuantity1 . "," . $prodQuantity2 . "," . $prodQuantity3 . "," . $prodQuantity4 . "," . $prodQuantity5 . "," . "\n");
-// Close the connection to the file.
-    fclose($csvFile);
+if (!empty($_SESSION["ShoppingCart"])) {
+    $cart_count = count(array_keys($_SESSION["ShoppingCart"]));
+    ?>
+    <div class="cart_div">
+        <a href="cart.php"><img src="images/cart-icon.png"/> Cart<span>
+<?php echo $cart_count; ?></span></a>
+    </div>
+    <?php
 }
+
+$result = $conn->query("SELECT * FROM Products");
+while ($row = $result->fetchArray()) {
+    echo "<div class='product_wrapper'>
+    <form method ='post' action =''>
+    <input type='hidden' name='Code' value=" . $row['Code'] . " />
+    <div class='image'><img src='images/productImages/" . $row['Image'] . "' width='100' height='100'/></div>
+    <div class='name'>" . $row['ProductName'] . "</div>
+    <div class='price'>$" . $row['Price'] . "</div>
+    <button type='submit' class='buy'>Add to Cart</button>
+    </form>
+    </div>";
+}
+
 ?>
-
-$sqlstmt = $conn->perepare(INSERT INTO Orders (OrderNumber, CustomerID, Quantity) VALUES (:OrderNumber, :CustomerID, :Product
-
-
-<?php echo footer() ?>
-</body>
-<script src="js/bootstrap.bundle.min.js"></script>
-</html>
-
-$productNames = array("product1"=>"Darth Vader Helmet", "product2"=>"Grogu Plush", "product3"=>"ROTJ Jigsaw", "product4"=>"Aftermath", "product5"=>"Alphabet Squadron");
-$productPrices= array("product1"=>299.0, "product2"=>32.95, "product3"=>219.95, "product4"=>24.95, "product5"=>24.95);
-
-
-<?php echo $productNames["product1"]; ?>
