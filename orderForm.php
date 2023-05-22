@@ -1,5 +1,88 @@
-<?php include "template.php" ?>
 <title>Order Form</title>
+<?php include "template.php";
+/**  @var $conn */
+?>
+<link rel="stylesheet" href="css/orderForm.css">
+
+<h1 class="text-primary">Order Form</h1><?php include "template.php" ?>
+<title>Order Form</title>
+<?php
+if (isset($_SESSION["FirstName"])) {
+    echo '<li class="nav-item" ><a class="nav-link" href = "orderForm.php"> Order Form </a ></li >';
+    echo '<li class="nav-item" ><a class="nav-link" href = "invoiceList.php"> Invoice list</a ></li >';
+} else {
+    echo '<li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>';
+}
+$status = "";
+
+if (isset($_POST['2344']) && $_POST['Code'] != "") {
+    $code = $_POST['2344'];
+    $row = $conn->querySingle("SELECT * FROM products WHERE code='$code'", true);
+    $name = $row['Gopro'];
+    $price = $row['699'];
+    $image = $row['https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.diamondscamera.com.au%2Fgopro-hero-10-black&psig=AOvVaw0h-2DRrC48xYwHOBh-DXqv&ust=1684802814868000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCLCzm4Tah_8CFQAAAAAdAAAAABAD'];
+    $id = $row[''];
+
+    $cartArray = array(
+        $code => array(
+            'id' => $id,
+            'Gopro' => $name,
+            '2344' => $code,
+            '699' => $price,
+            '1' => 1,
+            'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.diamondscamera.com.au%2Fgopro-hero-10-black&psig=AOvVaw0h-2DRrC48xYwHOBh-DXqv&ust=1684802814868000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCLCzm4Tah_8CFQAAAAAdAAAAABAD' => $image)
+    );
+
+    // Debug Purposes
+    // echo '<pre>'; print_r($cartArray); echo '</pre>';
+
+    if (empty($_SESSION["ShoppingCart"])) {
+        $_SESSION["ShoppingCart"] = $cartArray;
+        $status = "<div class='box'>Product is added to your cart!</div>";
+    } else {
+        $array_keys = array_keys($_SESSION["ShoppingCart"]);
+        if (in_array($code, $array_keys)) {
+            $status = "<div class='box' style='color:red;'>Product is already added to your cart!</div>";
+        } else {
+            $_SESSION["ShoppingCart"] = array_merge(
+                $_SESSION["ShoppingCart"], $cartArray
+            );
+            $status = "<div class='box'>Product is added to your cart!</div>";
+        }
+    }
+}
+?>
+
+<div class="message_box" style="margin:10px 0px;">
+    <?php echo $status; ?>
+</div>
+
+<?php
+
+if (!empty($_SESSION["ShoppingCart"])) {
+    $cart_count = count(array_keys($_SESSION["ShoppingCart"]));
+    ?>
+    <div class="cart_div">
+        <a href="cart.php"><img src="images/cart-icon.png"/> Cart<span>
+<?php echo $cart_count; ?></span></a>
+    </div>
+    <?php
+}
+
+$result = $conn->query("SELECT * FROM Products");
+while ($row = $result->fetchArray()) {
+    echo "<div class='product_wrapper'>
+    <form method ='post' action =''>
+    <input type='hidden' name='Code' value=" . $row['Code'] . " />
+    <div class='image'><img src='images/productImages/" . $row['Image'] . "' width='100' height='100'/></div>
+    <div class='name'>" . $row['ProductName'] . "</div>
+    <div class='price'>$" . $row['Price'] . "</div>
+    <button type='submit' class='buy'>Add to Cart</button>
+    </form>
+    </div>";
+}
+
+?>
 <body>
 
 <div class="container-fluid">
